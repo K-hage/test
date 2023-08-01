@@ -1,0 +1,60 @@
+{% load django_bootstrap5 %}
+{% load thumbnail %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+{% block content %}
+    <div class="container bg-secondary mx-auto">
+        <div class="vstack gap-3 col-md-4 mx-auto">
+
+            <div class="container w-75">
+                <div class="slider-for">
+                    {% for img in slider %}
+                        <img src="{% thumbnail img.image 800x600 crop upscale subject_location=img.image.subject_location %}"
+                             class="rounded-5 mx-auto d-block"
+                             alt="...">
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="slider-nav">
+                {% for img in slider %}
+                    <img src="{% thumbnail img.image 300x300 crop upscale subject_location=img.image.subject_location %}"
+                         class="rounded-5 d-inline p-1"
+                         alt="...">
+                {% endfor %}
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-migrate-3.4.1.js" integrity="sha256-CfQXwuZDtzbBnpa5nhZmga8QAumxkrhOToWweU52T38=" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('.slider-for').slick({
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: false,
+                        fade: true,
+                        asNavFor: '.slider-nav'
+                    });
+                    $('.slider-nav').slick({
+                        slidesToShow: 4,
+                        slidesToScroll: 1,
+                        asNavFor: '.slider-for',
+                        dots: false,
+                        centerMode: true,
+                        focusOnSelect: true
+                    });
+                });
+            </script>
+
+        </div>
+    </div>
+{% endblock content %}
